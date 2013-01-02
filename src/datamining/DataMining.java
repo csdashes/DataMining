@@ -10,11 +10,19 @@ package datamining;
  */
 public class DataMining {
 
+    private static float R,k,W;
+    private static Point[] Window;
+    
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
-        System.out.println("Let's start coding");
+        W = Menu.getWindowsWidth();
+        R = Menu.getParameterR();
+        k = Menu.getParameterK();
+        
+        Window = new Point[(int)W];
+        
+        
     }
 }
