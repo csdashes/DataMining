@@ -4,12 +4,13 @@
  */
 package input_system;
 
-import java.io.File;
+import datamining.Point;
+import java.io.EOFException;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.apache.mahout.math.Vector;
 
 /**
  *
@@ -17,23 +18,32 @@ import org.apache.mahout.math.Vector;
  */
 public class PointGenerator {
     
-    private FileInputStream file;
+    private Scanner scanner;
     
     public PointGenerator() {
-        this.file = null;
+        this.scanner = null;
     }
     
-    public PointGenerator(String filePath) {
-        try {
-            this.file = new FileInputStream(new File(filePath));
+    public PointGenerator(String fileName) {
+        try {        
+            this.scanner = new Scanner(new FileInputStream(fileName));
         } catch (FileNotFoundException ex) {
-            this.file = null;
             Logger.getLogger(PointGenerator.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
-    public Vector nextInterval() {
+    public Point nextInterval() throws EOFException {
         // For each line of this.file, get line and split to: id, dimentions...
-        return null;
+        if (scanner.hasNextLine()) {
+             return new Point(scanner.nextLine());
+        } else {
+            throw new EOFException();
+        }
     }
+    
+    @Override
+    protected void finalize ()  {
+        scanner.close();
+    }
+    
 }
