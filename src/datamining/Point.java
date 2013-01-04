@@ -4,8 +4,9 @@
  */
 package datamining;
 
-import org.apache.mahout.math.Vector;
 import org.apache.mahout.math.RandomAccessSparseVector;
+import org.apache.mahout.math.Vector;
+import org.apache.mahout.math.Vector.Element;
 
 /**
  *
@@ -41,5 +42,15 @@ public class Point {
     
     public Vector getDimentions() {
         return this.dimentions;
+    }
+    
+    @Override
+    public String toString() {
+        String point = "id: " + this.id + " Dimentions: ";
+        
+        for(Element f : this.dimentions){
+            point = point + f.get() + " ";
+        }
+        return point;
     }
 }
