@@ -50,16 +50,6 @@ public class Point {
         return this.dimentions;
     }
     
-    @Override
-    public String toString() {
-        String point = "id: " + this.id + " Dimentions: ";
-        
-        for(Element f : this.dimentions){
-            point = point + f.get() + " ";
-        }
-        return point;
-    }
-
     public void increaseNeighbors() {
         this.neighbors++;
     }
@@ -74,6 +64,19 @@ public class Point {
     
     public void setState(State s) {
         this.state = s;
+    }
+    
+    @Override
+    public String toString() {
+        String point = "id: " + this.id + " Dimentions: ";
+        
+        for(Element f : this.dimentions){
+            point = point + f.get() + " ";
+        }
+        
+        point += "State: " + this.state;
+        
+        return point;
     }
     
     public enum State {

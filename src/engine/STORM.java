@@ -82,10 +82,19 @@ public class STORM implements Engine {
     
     @Override
     public Point decay() throws EOFException {
-        Point tmp_p = this.is.nextInterval();
-        
-        calculateNeighbors(tmp_p);
-        checkStates(tmp_p);
-        return addNewPointToWindow(tmp_p);
+        try {
+            Point tmp_p = this.is.nextInterval();
+
+            calculateNeighbors(tmp_p);
+            checkStates(tmp_p);
+            return addNewPointToWindow(tmp_p);
+            
+        } catch (EOFException ex) {
+            if (this.ll.size() > 0) {
+                return this.ll.pollFirst();
+            } else {
+                throw new EOFException();
+            }
+        }
     }
 }

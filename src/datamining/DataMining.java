@@ -6,12 +6,10 @@ package datamining;
 
 import engine.Engine;
 import engine.STORM;
-import engine.utils.Point;
+import engine.utils.Statistics;
 import input_system.InputSystem;
 import input_system.PointGenerator;
 import java.io.EOFException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.apache.mahout.common.distance.DistanceMeasure;
 import org.apache.mahout.common.distance.EuclideanDistanceMeasure;
 
@@ -22,7 +20,6 @@ import org.apache.mahout.common.distance.EuclideanDistanceMeasure;
 public class DataMining {
 
     private static float R,k,W;
-    private static Point[] Window;
     
     /**
      * @param args the command line arguments
@@ -35,7 +32,7 @@ public class DataMining {
         
         W = 2;
         R = 20;
-        k = 3;
+        k = 2;
         
 //        PointGenerator pg = new PointGenerator("sample.txt");
 //        
@@ -62,19 +59,21 @@ public class DataMining {
 //        
 //        System.out.println(d);
         
+        boolean flag = true;
         
         InputSystem pg = new PointGenerator("sample.txt");
         DistanceMeasure edm = new EuclideanDistanceMeasure();
         Engine e = new STORM(pg, edm, R, k, W);
+        Statistics s = new Statistics();
         
-        try {
-            e.decay();
-        } catch (EOFException ex) {
-            Logger.getLogger(DataMining.class.getName()).log(Level.SEVERE, null, ex);
+        while(flag) {
+            try {
+                s.add(e.decay());
+            } catch (EOFException ex) {
+                flag = false;
+            }
         }
         
-        Window = new Point[(int)W];
-        
-        
+        System.out.println(s);
     }
 }
