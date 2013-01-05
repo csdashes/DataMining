@@ -82,13 +82,19 @@ public class STORM implements Engine {
     
     @Override
     public Point decay() throws EOFException {
+        // The main algorithm of STORM calculation engine.
         try {
+            // We get the next point.
             Point tmp_p = this.is.nextInterval();
 
+            // We calculate the number of naighbors that their distance is lower than R of our new point.
             calculateNeighbors(tmp_p);
-            checkStates(tmp_p);
-            return addNewPointToWindow(tmp_p);
             
+            // We check the points that are inside the window and our new point, if their state(inliner/outliner) is changed.
+            checkStates(tmp_p);
+            // We add the new point to the window. If the window if full, we poll the oldest point.
+            return addNewPointToWindow(tmp_p);
+        // We need to poll all remaining points that are inside the window.
         } catch (EOFException ex) {
             if (this.ll.size() > 0) {
                 return this.ll.pollFirst();
