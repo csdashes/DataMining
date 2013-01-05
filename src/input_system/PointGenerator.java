@@ -4,7 +4,7 @@
  */
 package input_system;
 
-import datamining.Point;
+import engine.utils.Point;
 import java.io.EOFException;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -16,7 +16,7 @@ import java.util.logging.Logger;
  *
  * @author Anastasis Andronidis <anastasis90@yahoo.gr>
  */
-public class PointGenerator {
+public class PointGenerator implements InputSystem {
     
     private Scanner scanner;
     
@@ -32,6 +32,7 @@ public class PointGenerator {
         }
     }
     
+    @Override
     public Point nextInterval() throws EOFException {
         // For each line of this.file, get line and split to: id, dimentions...
         if (scanner.hasNextLine()) {

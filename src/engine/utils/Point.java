@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package datamining;
+package engine.utils;
 
 import org.apache.mahout.math.RandomAccessSparseVector;
 import org.apache.mahout.math.Vector;
@@ -16,6 +16,8 @@ public class Point {
     
     private int id;
     private Vector dimentions;
+    private int neighbors;
+    private State state;
     
     public Point(String line) {
         String[] tokens = line.split(",");
@@ -29,11 +31,15 @@ public class Point {
         this.id = Integer.valueOf(tokens[0]);
         this.dimentions = new RandomAccessSparseVector(tokens.length-1);
         this.dimentions.assign(aDimentions);
+        this.neighbors = 0;
+        this.state = State.OUTLINER;
     }
     
     public Point(int id, Vector dimentions) {
         this.id = id;
         this.dimentions = dimentions;
+        this.neighbors = 0;
+        this.state = State.OUTLINER;
     }
     
     public int getId() {
@@ -52,5 +58,25 @@ public class Point {
             point = point + f.get() + " ";
         }
         return point;
+    }
+
+    public void increaseNeighbors() {
+        this.neighbors++;
+    }
+    
+    public int getNeighbors() {
+        return this.neighbors;
+    }
+    
+    public State getState() {
+        return this.state;
+    }
+    
+    public void setState(State s) {
+        this.state = s;
+    }
+    
+    public enum State {
+        OUTLINER, INLINER, OUT_TO_INLINER
     }
 }
