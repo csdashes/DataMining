@@ -4,10 +4,12 @@
  */
 package engine;
 
-import engine.utils.Point;
+import engine.utils.ISB;
+import engine.utils.Node;
 import input_system.InputSystem;
 import java.io.EOFException;
 import java.util.LinkedList;
+import java.util.List;
 import org.apache.mahout.common.distance.DistanceMeasure;
 
 /**
@@ -17,11 +19,9 @@ import org.apache.mahout.common.distance.DistanceMeasure;
 public class STORM implements Engine {
     
     private InputSystem is;
-    private DistanceMeasure dm;
-    private float R;
-    private float k;
-    private float W;
-    private LinkedList<Point> ll;
+    private int k;
+    private LinkedList<Node> ll;
+    private ISB isb;
     
     /**
      *
@@ -31,76 +31,51 @@ public class STORM implements Engine {
      * @param k the number of neighbors.
      * @param W the window size.
      */
-    public STORM(InputSystem is, DistanceMeasure dm, float R, float k, float W){
+    public STORM(InputSystem is, DistanceMeasure dm, double R, int k, int W){
         this.is = is;
-        this.dm = dm;
-        this.R = R;
         this.k = k;
-        this.W = W;
-        this.ll = new LinkedList<Point>();
+        this.ll = new LinkedList<Node>();
+        this.isb = new ISB(W, R, dm);
     }
-    
-    private void calculateNeighbors(Point p) {
-        Point tmp_p;
-        double d;
-
-        for (int i = 0; i < this.ll.size(); i++) {
-            tmp_p = this.ll.get(i);
-            d = dm.distance(tmp_p.getDimentions(), p.getDimentions());
-
-            if (d < R) {
-                p.increaseNeighbors();
-                tmp_p.increaseNeighbors();
+        
+    private void checkStates(List<Node> ln, Node new_node) {
+        
+        for(Node n : ln) {
+            if (n.getState() == Node.State.OUTLINER && n.getCountAfter() + n.getNNBefore().size() >= k) {
+                n.setState(Node.State.OUT_TO_INLINER);
             }
         }
-    }
-    
-    private void checkStates(Point p) {
-        Point tmp_p;
-        
-        for (int i = 0; i < this.ll.size(); i++) {
-            tmp_p = this.ll.get(i);
-            if (tmp_p.getState() == Point.State.OUTLINER && tmp_p.getNeighbors() >= k) {
-                tmp_p.setState(Point.State.OUT_TO_INLINER);
-            }
-        }
-        
-        if (p.getNeighbors() >= k) {
-            p.setState(Point.State.INLINER);
+                
+        if (new_node.getNNBefore().size() >= k) {
+            new_node.setState(Node.State.INLINER);
         }
     }
     
-    private Point addNewPointToWindow(Point p) {
-        this.ll.add(p);
-        
-        if (this.ll.size() > W) {
-           return this.ll.pollFirst();
-        } else {
-            return null;
+    private Node soloCheckState(Node n) {
+        if (n.getState() == Node.State.OUTLINER && n.getCountAfter() + n.getNNBefore().size() >= k) {
+            n.setState(Node.State.OUT_TO_INLINER);
         }
+        return n;
     }
-    
+        
     @Override
-    public Point decay() throws EOFException {
+    public Node decay() throws EOFException {
         // The main algorithm of STORM calculation engine.
         try {
             // We get the next point.
-            Point tmp_p = this.is.nextInterval();
-
-            // We calculate the number of naighbors that their distance is lower than R of our new point.
-            calculateNeighbors(tmp_p);
+            Node new_node = this.is.nextInterval();
+                        
+            // We calculate the number of neighbors that their distance is lower than R of our new point.            
+            List<Node> neighbors = this.isb.rangeQuery(new_node);
             
-            // We check the points that are inside the window and our new point, if their state(inliner/outliner) is changed.
-            checkStates(tmp_p);
+            // We check points state(inliner/outliner) if it is changed.
+            checkStates(neighbors, new_node);
+            
             // We add the new point to the window. If the window if full, we poll the oldest point.
-            return addNewPointToWindow(tmp_p);
+            return this.isb.addNode(new_node);
         // We need to poll all remaining points that are inside the window.
         } catch (EOFException ex) {
-            if (this.ll.size() > 0) {
-                return this.ll.pollFirst();
-            } else {
-                throw new EOFException();
-            }
+            return soloCheckState(this.isb.poll());
         }
     }
 }

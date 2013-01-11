@@ -12,11 +12,11 @@ import java.util.Scanner;
  */
 public class Menu {
     
-    static float getWindowsWidth() {
+    static int getWindowsWidth() {
         Scanner scanner = new Scanner(System.in);
         
         System.out.println("Please give windows width:");
-        return scanner.nextFloat();
+        return scanner.nextInt();
     }
     
     static float getParameterR() {
@@ -26,10 +26,10 @@ public class Menu {
         return scanner.nextFloat();
     }
     
-    static float getParameterK() {
+    static int getParameterK() {
         Scanner scanner = new Scanner(System.in);
         
         System.out.println("Please give k:");
-        return scanner.nextFloat();
+        return scanner.nextInt();
     }
 }

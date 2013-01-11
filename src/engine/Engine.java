@@ -4,7 +4,7 @@
  */
 package engine;
 
-import engine.utils.Point;
+import engine.utils.Node;
 import java.io.EOFException;
 
 /**
@@ -13,6 +13,6 @@ import java.io.EOFException;
  */
 public interface Engine {
     
-    public Point decay() throws EOFException;
+    public Node decay() throws EOFException;
     
 }

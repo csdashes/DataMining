@@ -4,7 +4,7 @@
  */
 package input_system;
 
-import engine.utils.Point;
+import engine.utils.Node;
 import java.io.EOFException;
 
 /**
@@ -13,6 +13,6 @@ import java.io.EOFException;
  */
 public interface InputSystem {
     
-    public Point nextInterval() throws EOFException;
+    public Node nextInterval() throws EOFException;
     
 }

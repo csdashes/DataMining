@@ -19,45 +19,19 @@ import org.apache.mahout.common.distance.EuclideanDistanceMeasure;
  */
 public class DataMining {
 
-    private static float R,k,W;
+    private static double R;
+    private static int k,W;
     
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         
-//        W = Menu.getWindowsWidth();
-//        R = Menu.getParameterR();
-//        k = Menu.getParameterK();
-        
-        W = 2;
-        R = 20;
-        k = 2;
-        
-//        PointGenerator pg = new PointGenerator("sample.txt");
-//        
-//        boolean flag = true;
-//        
-//        while(flag) {
-//            try {
-//                System.out.println(pg.nextInterval());
-//            } catch (EOFException ex) {
-//                flag = false;
-//            }
-//        }
+        W = Menu.getWindowsWidth();
+        R = Menu.getParameterR();
+        k = Menu.getParameterK();
         
         
-//        InputSystem pg2 = new PointGenerator("sample.txt");
-//        EuclideanDistanceMeasure edm = new EuclideanDistanceMeasure();
-//        
-//        double d=-1;
-//        try {
-//            d = edm.distance(pg2.nextInterval().getDimentions(), pg2.nextInterval().getDimentions());
-//        } catch (EOFException ex) {
-//            Logger.getLogger(DataMining.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        
-//        System.out.println(d);
         
         boolean flag = true;
         

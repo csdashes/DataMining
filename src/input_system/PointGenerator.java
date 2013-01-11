@@ -4,7 +4,7 @@
  */
 package input_system;
 
-import engine.utils.Point;
+import engine.utils.Node;
 import java.io.EOFException;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -33,10 +33,10 @@ public class PointGenerator implements InputSystem {
     }
     
     @Override
-    public Point nextInterval() throws EOFException {
+    public Node nextInterval() throws EOFException {
         // For each line of this.file, get line and split to: id, dimentions...
         if (scanner.hasNextLine()) {
-             return new Point(scanner.nextLine());
+             return new Node(scanner.nextLine());
         } else {
             throw new EOFException();
         }

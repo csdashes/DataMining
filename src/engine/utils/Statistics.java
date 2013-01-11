@@ -19,14 +19,14 @@ public class Statistics {
         this.outliners = 0;
     }
     
-    public void add(Point p){
+    public void add(Node p){
         if (p == null) {
             return;
         }
         
-        if (p.getState() == Point.State.INLINER){
+        if (p.getState() == Node.State.INLINER){
             this.inliners++;    
-        } else if (p.getState() == Point.State.OUTLINER) {
+        } else if (p.getState() == Node.State.OUTLINER) {
             this.outliners++;
         } else {
             this.out_to_inliners++;

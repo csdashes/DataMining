@@ -4,6 +4,7 @@
  */
 package engine.utils;
 
+import java.util.TreeSet;
 import org.apache.mahout.math.RandomAccessSparseVector;
 import org.apache.mahout.math.Vector;
 import org.apache.mahout.math.Vector.Element;
@@ -12,14 +13,15 @@ import org.apache.mahout.math.Vector.Element;
  *
  * @author Anastasis Andronidis <anastasis90@yahoo.gr>
  */
-public class Point {
-    
+public class Node {
+        
     private int id;
     private Vector dimentions;
-    private int neighbors;
+    private int count_after;
+    private TreeSet<Integer> nn_before;
     private State state;
     
-    public Point(String line) {
+    public Node(String line) {
         String[] tokens = line.split(",");
         
         double[] aDimentions = new double[tokens.length-1];
@@ -31,15 +33,20 @@ public class Point {
         this.id = Integer.valueOf(tokens[0]);
         this.dimentions = new RandomAccessSparseVector(tokens.length-1);
         this.dimentions.assign(aDimentions);
-        this.neighbors = 0;
+        
+        this.count_after = 1;
+        
         this.state = State.OUTLINER;
+        
+        this.nn_before = new TreeSet<Integer>();
     }
     
-    public Point(int id, Vector dimentions) {
+    public Node(int id, Vector dimentions) {
         this.id = id;
         this.dimentions = dimentions;
-        this.neighbors = 0;
+        this.count_after = 1;
         this.state = State.OUTLINER;
+        this.nn_before = new TreeSet<Integer>();
     }
     
     public int getId() {
@@ -50,12 +57,12 @@ public class Point {
         return this.dimentions;
     }
     
-    public void increaseNeighbors() {
-        this.neighbors++;
+    public void increaseCountAfter() {
+        this.count_after++;
     }
     
-    public int getNeighbors() {
-        return this.neighbors;
+    public int getCountAfter() {
+        return this.count_after;
     }
     
     public State getState() {
@@ -64,6 +71,22 @@ public class Point {
     
     public void setState(State s) {
         this.state = s;
+    }
+    
+    public TreeSet<Integer> getNNBefore() {
+        return this.nn_before;
+    }
+    
+    public boolean addNNBefore(int id) {
+        return this.nn_before.add(id);
+    }
+    
+    public boolean removeNNBefore(int id) {
+        return this.nn_before.remove(id);
+    }
+    
+    public boolean containsNNBefore(int id) {
+        return this.nn_before.contains(id);
     }
     
     @Override
