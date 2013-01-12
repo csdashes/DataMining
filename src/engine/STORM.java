@@ -8,7 +8,6 @@ import engine.utils.ISB;
 import engine.utils.Node;
 import input_system.InputSystem;
 import java.io.EOFException;
-import java.util.LinkedList;
 import java.util.List;
 import org.apache.mahout.common.distance.DistanceMeasure;
 
@@ -20,7 +19,6 @@ public class STORM implements Engine {
     
     private InputSystem is;
     private int k;
-    private LinkedList<Node> ll;
     private ISB isb;
     
     /**
@@ -34,7 +32,6 @@ public class STORM implements Engine {
     public STORM(InputSystem is, DistanceMeasure dm, double R, int k, int W){
         this.is = is;
         this.k = k;
-        this.ll = new LinkedList<Node>();
         this.isb = new ISB(W, R, dm);
     }
         
