@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package datamining;
 
 import engine.Engine;
@@ -14,8 +10,9 @@ import org.apache.mahout.common.distance.DistanceMeasure;
 import org.apache.mahout.common.distance.EuclideanDistanceMeasure;
 
 /**
- *
+ * The main class of the application.
  * @author Anastasis Andronidis <anastasis90@yahoo.gr>
+ * @author Ilias Trichopoulos <itrichop@csd.auth.gr>
  */
 public class DataMining {
 
@@ -23,15 +20,16 @@ public class DataMining {
     private static int k,W;
     
     /**
-     * @param args the command line arguments
+     * The main method of the application. Gets the input from the user,
+     * generates the points from the input file, calculates the status of the 
+     * points and prints the statistics.
+     * @param args the command line arguments. No arguments are required.
      */
     public static void main(String[] args) {
         
         W = Menu.getWindowsWidth();
         R = Menu.getParameterR();
         k = Menu.getParameterK();
-        
-        
         
         boolean flag = true;
         

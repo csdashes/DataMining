@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package engine.utils;
 
 import java.io.EOFException;
@@ -32,7 +28,11 @@ public class ISB {
         this.R = R;
     }
         
-    // We get all id,node pairs that are inside the ISB.
+    /**
+     * Creates and returns a {@link HashMap} with all id, node pairs that are 
+     * inside the <code>ISB</code>
+     * @return a Map with the pairs {id,node}
+     */
     private Map<Integer,Node> getAllNodesHash() {
         
         Map<Integer,Node> tmp_hash = new HashMap<Integer,Node>();
@@ -52,6 +52,11 @@ public class ISB {
         return tmp_hash;
     }
     
+    /**
+     * Adds a new node and returns the result node.
+     * @param n the new point
+     * @return the result point
+     */
     public Node addNode(Node n) {
         if (this.n_pivots < this.pivot_table.length) {
             ISB_Pivot p = new ISB_Pivot(n);
@@ -117,7 +122,13 @@ public class ISB {
         }
     }
     
-    // Given a node n, we scan ISB and we get all nodes that are closer than R distance from n.
+    /**
+     * Given the node n, scans the ISB and returns all nodes that are closer 
+     * than R distance from the point <code>n</code>.
+     * @param n the point
+     * @return the list of points that are closer than R distance from the input
+     * point
+     */
     public ArrayList<Node> rangeQuery(Node n) {
         double d;
         Node tmp_p;
@@ -163,6 +174,11 @@ public class ISB {
     }
 
     // This function is returing all remaining nodes of the ISB.
+    /**
+     * This method is used to return all remaining nodes of the <code>ISB</code>
+     * @return a point
+     * @throws EOFException 
+     */
     public Node poll() throws EOFException {
         ISB_Pivot p;
         for (int i = 0; i < this.n_pivots; i++) {
@@ -183,6 +199,10 @@ public class ISB {
         throw new EOFException();
     }
 
+    /**
+     * 
+     * @param table 
+     */
     private void shiftTable(Object[] table) {
         if (table.length == 1) {
             table[0] = null;
@@ -193,9 +213,10 @@ public class ISB {
             table[i] = table[i + 1];
         }
     }
-    
-    // This wrapper class is delcaring a node as a pivot to the ISB
-    // We also have an array list that keeps references to the nodes and their distance.
+    /**
+     * This wrapper class declares a node as a pivot to the <code>ISB</code>. An
+     * array keeps references to the nodes and their distance.
+     */
     public class ISB_Pivot {
         public Node n;
         public List<ISB_Node> sl;
@@ -206,7 +227,10 @@ public class ISB {
         }
     }
     
-    // This wrapper class is delcaring a node as an ISB node that keeps distance info from a pivot.
+    /**
+     * This wrapper class declares a node as an <code>ISB</code> node that keeps
+     * the distance information from a pivot.
+     */
     public class ISB_Node implements Comparable<ISB_Node> {
         public Node n;
         public double distance;

@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package engine.utils;
 
 import java.util.TreeSet;
@@ -10,8 +6,9 @@ import org.apache.mahout.math.Vector;
 import org.apache.mahout.math.Vector.Element;
 
 /**
- *
+ * This class represents a pointer.
  * @author Anastasis Andronidis <anastasis90@yahoo.gr>
+ * @author Ilias Trichopoulos <itrichop@csd.auth.gr>
  */
 public class Node {
         
@@ -21,6 +18,10 @@ public class Node {
     private TreeSet<Integer> nn_before;
     private State state;
     
+    /**
+     * Initializes the pointer, reading the coordinates from the input line.
+     * @param line the line from the input file
+     */
     public Node(String line) {
         String[] tokens = line.split(",");
         

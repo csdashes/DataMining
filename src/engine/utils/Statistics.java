@@ -1,24 +1,28 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package engine.utils;
 
 /**
- *
+ * 
  * @author Anastasis Andronidis <anastasis90@yahoo.gr>
+ * @author Ilias Trichopoulos <itrichop@csd.auth.gr>
  */
 public class Statistics {
     private int outliners;
     private int inliners;
     private int out_to_inliners;
     
+    /**
+     * Initializes the fields.
+     */
     public Statistics(){
         this.inliners = 0;
         this.out_to_inliners = 0;
         this.outliners = 0;
     }
     
+    /**
+     * Updates the statistics according to the status of the pointer.
+     * @param p the pointer
+     */
     public void add(Node p){
         if (p == null) {
             return;
@@ -33,6 +37,11 @@ public class Statistics {
         }
     }
     
+    /**
+     * Prints the statistics. The message is in the form "outliners: [outliners] inliners: [inliners]
+     * out_to_inliners: [out_to_inliners]".
+     * @return the message as a string
+     */
     @Override
     public String toString() {
         String point = "outliners: " + this.outliners + " inliners: " + this.inliners + " out_to_inliners: " + this.out_to_inliners;
