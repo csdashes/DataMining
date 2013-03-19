@@ -11,11 +11,14 @@ import java.util.Scanner;
  */
 public class Menu {
     
+    public Menu() {
+    }
+    
     /**
      * Requests from the user the window width.
      * @return the window width
      */
-    static int getWindowsWidth() {
+    public static int getWindowsWidth() {
         Scanner scanner = new Scanner(System.in);
         
         System.out.println("Please give windows width:");
@@ -27,7 +30,7 @@ public class Menu {
      * It is called Parameter R.
      * @return the radius of a clustering neighborhood
      */
-    static float getParameterR() {
+    public static float getParameterR() {
         Scanner scanner = new Scanner(System.in);
         
         System.out.println("Please give R:");
@@ -41,7 +44,7 @@ public class Menu {
      * accepted as an in-line point.
      * @return the min number of neighbors
      */
-    static int getParameterK() {
+    public static int getParameterK() {
         Scanner scanner = new Scanner(System.in);
         
         System.out.println("Please give k:");
